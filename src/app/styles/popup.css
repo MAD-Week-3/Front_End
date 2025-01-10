@@ -1,0 +1,28 @@
+.popup {
+  z-index: 1000;
+}
+
+.popup-dialog {
+  max-width: 400px;
+  background-color: white;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: scale-in 0.2s ease-out;
+}
+
+.popup-dialog button {
+  cursor: pointer;
+}
+
+/* Animation for Popup */
+@keyframes scale-in {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
