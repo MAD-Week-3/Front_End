@@ -1,7 +1,6 @@
 import ProfileCard from "@/app/components/ProfileCard";
 import ReviewGrid from "./review-grid";
 import Newsletter from "./newsletter";
-import "../../styles/roommate.css";
 import DetailCard from "@/app/components/DetailCard";
 
 export default function RoommateProfilePage({

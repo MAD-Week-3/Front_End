@@ -1,0 +1,30 @@
+/* Footer */
+footer {
+  margin-top: 40px;
+  padding: 20px;
+  background-color: #333333;
+  color: #ffffff;
+  text-align: center;
+}
+
+footer p {
+  margin: 0;
+  font-size: 14px;
+}
+
+footer .links {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+footer .links a {
+  color: #ffffff;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+footer .links a:hover {
+  text-decoration: underline;
+}

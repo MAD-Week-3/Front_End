@@ -1,7 +1,6 @@
-import "./styles/globals.css";
 import Header from "./components/Header";
 import Footer from "././components/Footer";
-import "./styles/roommate.css";
+import "./styles/index.css"
 
 export default function RootLayout({
   children,
