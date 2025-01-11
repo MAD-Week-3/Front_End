@@ -1,0 +1,29 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  user_id          Int       @id @default(autoincrement()) // Primary key
+  password         String    // Password field
+  username         String    // Username field
+  phone_num        String    // Phone number
+  age              Int       // Age
+  smoking          Smoking   // Enum for smoking preference
+  education        String?   // Optional education field
+  preference       String?   // Optional preference field (TEXT equivalent)
+  contact_info     String?   // Optional contact info field (TEXT equivalent)
+  desired_location String?   // Optional desired location
+  bio              String?   // Optional bio field
+  created_at       DateTime  @default(now()) // Default timestamp for creation
+  image            Bytes?    // Binary data for image (BLOB equivalent)
+}
+
+enum Smoking {
+  yes
+  no
+}

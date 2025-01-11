@@ -15,6 +15,11 @@ export default function ProfileCard({
   preferences,
 }: ProfileCardProps) {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [isLiked, setIsLiked] = useState(false); // State to track the heart status
+
+  const toggleLike = () => {
+    setIsLiked(!isLiked);
+  };
 
   const handleOpenPopup = () => {
     setIsPopupVisible(true);
@@ -44,13 +49,20 @@ export default function ProfileCard({
             <option>Preferred Value</option>
           </select>
         </div>
-        <button>❤️</button>
         <button
-          className="write-review-button bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          onClick={handleOpenPopup}
+          className="heart-button text-2xl hover:scale-110 transition-transform"
+          onClick={toggleLike}
         >
-          Write Review
+          {isLiked ? "❤️" : "🤍"}
         </button>
+        {isLiked && (
+          <button
+            className="write-review-button bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            onClick={handleOpenPopup}
+          >
+            Write Review
+          </button>
+        )}
         <Popup
           title="write a review"
           isVisible={isPopupVisible}

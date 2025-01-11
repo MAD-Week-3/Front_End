@@ -49,3 +49,13 @@
 .profile-card .details button:hover {
   background-color: #333333;
 }
+
+.heart-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+.heart-button:hover {
+  transform: scale(1.1); /* Slightly enlarges on hover */
+}
