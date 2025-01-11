@@ -60,3 +60,9 @@ header button:hover {
 header h1 {
   margin-right: 32vw;
 }
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}

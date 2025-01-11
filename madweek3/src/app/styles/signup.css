@@ -1,0 +1,113 @@
+/* Global Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
+  color: #333333;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+/* Container */
+.signin-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f9fafb; /* Matches bg-gray-50 */
+}
+
+/* Form Section */
+.signin-form {
+  width: 100%;
+  max-width: 400px;
+  margin: 4rem auto 0; /* Matches mt-16 */
+  background-color: #ffffff; /* Matches bg-white */
+  padding: 2rem; /* Matches p-8 */
+  border-radius: 0.375rem; /* Matches rounded */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Matches shadow */
+  text-align: center;
+}
+
+.signin-title {
+  font-size: 1.875rem; /* Matches text-3xl */
+  font-weight: bold;
+  margin-bottom: 1rem; /* Matches mb-4 */
+}
+
+.signin-subtitle {
+  color: #6b7280; /* Matches text-gray-600 */
+  margin-bottom: 2rem; /* Matches mb-8 */
+}
+
+/* Form Fields */
+.signin-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* Matches space-y-6 */
+}
+
+.form-group {
+  text-align: left;
+}
+
+.form-label {
+  display: block;
+  color: #4b5563; /* Matches text-gray-700 */
+  margin-bottom: 0.5rem; /* Matches mb-2 */
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.5rem 1rem; /* Matches px-4 py-2 */
+  border: 1px solid #d1d5db; /* Matches border */
+  border-radius: 0.375rem; /* Matches rounded */
+  font-size: 1rem;
+}
+
+/* Error Message */
+.error-message {
+  color: #ef4444; /* Matches text-red-500 */
+  font-size: 0.875rem; /* Matches text-sm */
+}
+
+/* Submit Button */
+.submit-button {
+  width: 100%;
+  padding: 0.5rem 1rem; /* Matches px-4 py-2 */
+  background-color: #000000; /* Matches bg-black */
+  color: #ffffff;
+  border-radius: 0.375rem; /* Matches rounded */
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #374151; /* Matches hover:bg-gray-800 */
+}
+
+/* Footer */
+.signin-footer {
+  width: 100%;
+  margin-top: 4rem; /* Matches mt-16 */
+  padding: 1.5rem 0; /* Matches py-6 */
+  background-color: #f3f4f6; /* Matches bg-gray-100 */
+  color: #6b7280; /* Matches text-gray-600 */
+  text-align: center;
+}
