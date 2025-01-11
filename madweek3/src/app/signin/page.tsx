@@ -58,8 +58,8 @@ export default function SignIn() {
     }
   };
 
-  return (
-    <div className="min-h-screen flex flex-col items-center bg-gray-50">
+  return (-
+    <div className="min-h-screen flex flex-col itemscenter bg-gray-50">
       <main className="w-full max-w-md mx-auto mt-16 bg-white p-8 rounded shadow">
         <h1 className="text-3xl font-bold text-center mb-4">ForRoom</h1>
         <p className="text-center text-gray-600 mb-8">로그인</p>
