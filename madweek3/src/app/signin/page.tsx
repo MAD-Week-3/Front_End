@@ -94,10 +94,6 @@ export default function SignIn() {
           </button>
         </form>
       </main>
-
-      <footer className="signin-footer">
-        &copy; 2025 ForRoom. All rights reserved.
-      </footer>
     </div>
   );
 }

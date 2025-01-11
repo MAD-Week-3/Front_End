@@ -5,16 +5,14 @@ import { useRouter } from "next/navigation";
 
 export default function SignUpPage() {
   const router = useRouter();
-  
+
   const [formData, setFormData] = useState({
     username: "",
     password: "",
     name: "",
   });
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -22,7 +20,6 @@ export default function SignUpPage() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // FormData로 변환
     const formDataToSubmit = new FormData();
     formDataToSubmit.append("username", formData.username);
     formDataToSubmit.append("password", formData.password);
@@ -41,13 +38,8 @@ export default function SignUpPage() {
         return;
       }
 
-      // 회원가입 성공
       alert("회원가입 성공!");
-
-      // 현재 아이디를 localStorage에 저장 => 로그인 상태로 간주
       localStorage.setItem("username", formData.username);
-
-      // 홈화면으로 이동
       router.push("/");
     } catch (error) {
       console.error("Error:", error);
@@ -56,19 +48,17 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-      <div className="w-full max-w-md bg-white p-8 rounded shadow">
-        <h2 className="text-3xl font-bold mb-6 text-center">회원가입</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="signup-container">
+      <div className="signup-form">
+        <h2 className="signup-title">회원가입</h2>
+        <form onSubmit={handleSubmit} className="signup-fields">
           {/* Username */}
-          <div>
-            <label className="block text-gray-700 mb-1 font-semibold">
-              아이디
-            </label>
+          <div className="form-group">
+            <label className="form-label">아이디</label>
             <input
               type="text"
               name="username"
-              className="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-1"
+              className="form-input"
               value={formData.username}
               onChange={handleChange}
               placeholder="아이디"
@@ -77,14 +67,12 @@ export default function SignUpPage() {
           </div>
 
           {/* Password */}
-          <div>
-            <label className="block text-gray-700 mb-1 font-semibold">
-              비밀번호
-            </label>
+          <div className="form-group">
+            <label className="form-label">비밀번호</label>
             <input
               type="password"
               name="password"
-              className="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-1"
+              className="form-input"
               value={formData.password}
               onChange={handleChange}
               placeholder="비밀번호"
@@ -93,14 +81,12 @@ export default function SignUpPage() {
           </div>
 
           {/* Name */}
-          <div>
-            <label className="block text-gray-700 mb-1 font-semibold">
-              이름
-            </label>
+          <div className="form-group">
+            <label className="form-label">이름</label>
             <input
               type="text"
               name="name"
-              className="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-1"
+              className="form-input"
               value={formData.name}
               onChange={handleChange}
               placeholder="홍길동"
@@ -110,10 +96,7 @@ export default function SignUpPage() {
 
           {/* Submit Button */}
           <div>
-            <button
-              type="submit"
-              className="w-full bg-black text-white py-2 rounded hover:bg-gray-800 transition-colors"
-            >
+            <button type="submit" className="submit-button">
               회원가입
             </button>
           </div>
