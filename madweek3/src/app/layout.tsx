@@ -1,6 +1,7 @@
 import Header from "./components/Header";
 import Footer from "././components/Footer";
 import "./styles/index.css";
+import { UserProvider } from "./UserContext";
 
 export default function RootLayout({
   children,
@@ -9,11 +10,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
-        <Header />
-        <main>{children}</main>
-        <Footer />
-      </body>
+      <UserProvider>
+        <body>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+        </body>
+      </UserProvider>
     </html>
   );
 }

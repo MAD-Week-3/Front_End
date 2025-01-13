@@ -2,14 +2,17 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { SERVER_URL, useUser } from "../UserContext";
 
 export default function SignUpPage() {
   const router = useRouter();
+  const { setLoggedInUserId, setLoggedInUserName } = useUser();
 
   const [formData, setFormData] = useState({
     username: "",
     password: "",
     name: "",
+    user_id: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,16 +22,20 @@ export default function SignUpPage() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    const formDataToSubmit = new FormData();
-    formDataToSubmit.append("username", formData.username);
-    formDataToSubmit.append("password", formData.password);
-    formDataToSubmit.append("name", formData.name);
+    let user_id, user_name;
 
     try {
-      const response = await fetch("http://localhost:5001/add_user", {
+      const response = await fetch(`${SERVER_URL}/add_user`, {
         method: "POST",
-        body: formDataToSubmit,
+        headers: {
+          "Content-Type": "application/json", // Sending JSON data
+        },
+        body: JSON.stringify({
+          username: formData.username,
+          password: formData.password,
+          name: formData.name,
+          user_id: formData.user_id,
+        }),
       });
 
       if (!response.ok) {
@@ -39,12 +46,31 @@ export default function SignUpPage() {
       }
 
       alert("회원가입 성공!");
-      localStorage.setItem("username", formData.username);
-      router.push("/");
+
+      try {
+        const response = await fetch(`${SERVER_URL}/profile_detail`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            user_id: formData.user_id,
+          }),
+        });
+        const result = await response.json();
+        user_id = result.user_id;
+        user_name = result.name;
+
+        router.push("/");
+      } catch (error) {
+        console.error("Error:", error);
+        alert("오류가 발생했습니다.");
+      }
     } catch (error) {
       console.error("Error:", error);
       alert("오류가 발생했습니다.");
     }
+
+    setLoggedInUserId(user_id);
+    setLoggedInUserName(user_name);
   };
 
   return (

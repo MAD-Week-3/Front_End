@@ -2,13 +2,17 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useUser } from "../UserContext";
+import { SERVER_URL } from "../UserContext";
 
 export default function SignIn() {
   const router = useRouter();
+  const { setLoggedInUserId, setLoggedInUserName } = useUser();
 
   const [formData, setFormData] = useState({
     username: "",
     password: "",
+    user_id: "",
   });
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -20,19 +24,18 @@ export default function SignIn() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrorMsg("");
+    let user_id, user_name;
 
     try {
-      const response = await fetch(
-        "https://4e2f-2001-2d8-6480-408d-30ce-2347-7370-aa7f.ngrok-free.app/login",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            username: formData.username,
-            password: formData.password,
-          }),
-        }
-      );
+      const response = await fetch(`${SERVER_URL}/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: formData.username,
+          password: formData.password,
+          user_id: formData.user_id,
+        }),
+      });
 
       const result = await response.json();
       console.log("로그인 응답:", result);
@@ -42,8 +45,23 @@ export default function SignIn() {
         return;
       }
 
-      localStorage.setItem("username", result.username);
-      localStorage.setItem("name", result.name);
+      user_id = result.user_id;
+      user_name = result.name;
+
+      try {
+        await fetch(`${SERVER_URL}/profile_detail`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            user_id: user_id,
+          }),
+        });
+
+        router.push("/");
+      } catch (error) {
+        console.error("Error:", error);
+        alert("오류가 발생했습니다.");
+      }
 
       alert("로그인 성공!");
       router.push("/");
@@ -52,6 +70,8 @@ export default function SignIn() {
       console.error(err);
       setErrorMsg("로그인 중 오류가 발생했습니다.");
     }
+    setLoggedInUserId(user_id);
+    setLoggedInUserName(user_name);
   };
 
   return (

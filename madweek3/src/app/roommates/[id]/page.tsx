@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
 import ProfileCard from "@/app/components/ProfileCard";
-import ReviewGrid from "./review-grid";
-import Newsletter from "./newsletter";
+import ReviewGrid from "../../components/review-grid";
+import Newsletter from "../../components/newsletter";
 import DetailCard from "@/app/components/DetailCard";
 
 export default async function RoommateProfilePage({
@@ -14,9 +14,9 @@ export default async function RoommateProfilePage({
   const roommate = {
     name: "dylan",
     age: 21,
-    preference: "aaaaaaa",
+    introduction: "aaaaaaa",
     bio: "bbbb",
-  }
+  };
 
   if (!id) {
     return (
@@ -33,9 +33,11 @@ export default async function RoommateProfilePage({
         <ProfileCard
           name={roommate.name}
           age={roommate.age}
-          preferences={roommate.preference || "No preferences available"}
+          introduction={roommate.introduction || "No preferences available"}
         />
-        <DetailCard description={roommate.bio || "No bio available."} />
+        <DetailCard
+          introduction={roommate.introduction || "No bio available."}
+        />
         <Newsletter />
       </div>
       <div className="reviews-section">

@@ -1,4 +1,4 @@
-import ReviewCard from "../../components/ReviewCard";
+import ReviewCard from "./ReviewCard";
 
 export default function ReviewGrid() {
   const reviews = [

@@ -6,13 +6,13 @@ import Popup from "./Popup";
 interface ProfileCardProps {
   name: string;
   age: number;
-  preferences: string;
+  introduction: string;
 }
 
 export default function ProfileCard({
   name,
   age,
-  preferences,
+  introduction,
 }: ProfileCardProps) {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [isLiked, setIsLiked] = useState(false); // State to track the heart status
@@ -40,7 +40,7 @@ export default function ProfileCard({
       <div className="details">
         <h2>{name}</h2>
         <p>Age: {age}</p>
-        <p>Preferences: {preferences}</p>
+        <p>introduction: {introduction}</p>
         <div className="dropdowns">
           <select>
             <option>Recent Rating</option>
