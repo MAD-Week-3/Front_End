@@ -11,8 +11,8 @@ export default function Header() {
         <Link href="/roommates" className="text-gray-600 hover:text-gray-900">
           룸메이트
         </Link>
-        <Link href="/support" className="text-gray-600 hover:text-gray-900">
-          고객센터
+        <Link href="/estate" className="text-gray-600 hover:text-gray-900">
+          부동산
         </Link>
         {/* 비로그인 상태: Sign In / Sign Up 버튼 */}
         <Link href="/signin">

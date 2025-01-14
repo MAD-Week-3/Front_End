@@ -14,6 +14,11 @@ export default function Home() {
   const handleSignUpClick = () => {
     router.push("/signup");
   };
+  
+  const handleEstateClick = () => {
+    router.push("/estate"); // 부동산 페이지로 이동
+  };
+
 
   const handleOpenModal = () => {
     setShowModal(true); // 모달 열기
