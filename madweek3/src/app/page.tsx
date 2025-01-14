@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import ReviewCard from "./components/ReviewCard";
+import Image from "next/image";
 
 export default function Home() {
   const [showModal, setShowModal] = useState(false); // 팝업 상태 관리
@@ -67,6 +68,11 @@ export default function Home() {
   const handleSignUpClick = () => {
     router.push("/signup");
   };
+  
+  const handleEstateClick = () => {
+    router.push("/estate"); // 부동산 페이지로 이동
+  };
+
 
   const handleOpenModal = () => {
     setShowModal(true); // 모달 열기
@@ -80,7 +86,16 @@ export default function Home() {
     <div className="home-container">
       {/* Hero Section */}
       <main className="hero-section">
+      <div className="hero-logo">
+      <Image
+        src="/icon2.png" // public 폴더를 기준으로 한 경로
+        alt="ForRoom Logo"
+        width={50}
+        height={50}
+        className="hero-logo-image"
+      />
         <h2 className="hero-title">ForRoom</h2>
+        </div>
         <p className="hero-subtitle">나와 맞는 룸메이트 찾기</p>
         <div className="hero-buttons">
           <button
@@ -103,7 +118,7 @@ export default function Home() {
         className="background-section"
         style={{ backgroundImage: "url('/background.png')" }}
       >
-        <div className="background-text">배경 이미지가 있는 섹션입니다.</div>
+      
       </div>
 
       {/* Review Section */}

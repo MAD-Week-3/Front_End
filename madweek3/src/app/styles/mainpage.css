@@ -90,6 +90,11 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
+  background-image: url('/background.png');
+  background-size: cover; /* 좌우 꽉 채우기 + 비율 유지 */
+  background-position: center; /* 이미지를 가운데 정렬 */
+  background-repeat: no-repeat; /* 이미지 반복 제거 */
+  height: 700px; /* 섹션 높이 (필요에 따라 조정) */
 }
 
 .background-text {

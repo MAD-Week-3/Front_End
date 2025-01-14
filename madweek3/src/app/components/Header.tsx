@@ -14,6 +14,9 @@ export default function Header() {
         <Link href="/mypage" className="text-gray-600 hover:text-gray-900">
           마이페이지
         </Link>
+        <Link href="/estate" className="text-gray-600 hover:text-gray-900">
+          부동산
+        </Link>
         {/* 비로그인 상태: Sign In / Sign Up 버튼 */}
         <Link href="/signin">
           <button className="px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700">
