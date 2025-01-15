@@ -17,9 +17,9 @@ export default function MyPage() {
     phone: "",
     snoring: false,
   });
+  const [imagePreview, setImagePreview] = useState<string>(""); // For showing image preview
 
   useEffect(() => {
-    // Fetch user profile data
     async function fetchUserData() {
       let data;
       const id = loggedInUserId;
@@ -35,6 +35,7 @@ export default function MyPage() {
         data = await response.json();
       } catch (err) {
         console.error(err);
+        return;
       }
 
       if (data.profile) {
@@ -43,14 +44,18 @@ export default function MyPage() {
           budget: data.profile.budget || "",
           phone: data.profile.phone || "",
           age: data.profile.age || "",
-          is_smoking: data.profile.is_smoking === 1,
+          is_smoking: data.profile.is_smoking || false,
           wishes: data.profile.wishes || "",
           introduction: data.profile.introduction || "",
-          profile_image:
-            data.profile.profile_image || "/placeholder-avatar.png",
+          profile_image: data.profile.profile_image || "",
           snoring: data.profile.snoring || false,
           preferred_region: data.profile.preferred_region || "",
         });
+
+        // Directly set the Base64 string to imagePreview
+        if (data.profile.profile_image) {
+          setImagePreview(data.profile.profile_image);
+        }
       }
     }
 
@@ -67,13 +72,34 @@ export default function MyPage() {
     }));
   };
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        const base64 = reader.result as string;
+        setProfile((prev) => ({
+          ...prev,
+          profile_image: base64, // Update profile with Base64 image
+        }));
+        setImagePreview(base64); // Update image preview
+      };
+
+      reader.onerror = () => {
+        console.error("Error reading file");
+      };
+
+      reader.readAsDataURL(file); // Convert image to Base64
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
-      console.log("vvvv", profile);
       const response = await fetch(`${SERVER_URL}/profile`, {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -93,10 +119,10 @@ export default function MyPage() {
 
   return (
     <div className="mypage-container">
-      {/* Editable Inputs Section */}
       <form onSubmit={handleSubmit} className="profile-edit-form detail-card">
         <h3 className="form-section-title">Edit Profile</h3>
 
+        {/* Other Profile Fields */}
         <div className="form-group">
           <label className="form-label">Age</label>
           <input
@@ -201,6 +227,30 @@ export default function MyPage() {
             <option value="1">Yes</option>
             <option value="0">No</option>
           </select>
+        </div>
+
+        {/* Profile Image Display and Upload */}
+        <div className="form-group">
+          <label className="form-label">Profile Image</label>
+          {imagePreview && (
+            <div className="image-preview">
+              <img
+                src={imagePreview}
+                alt="Profile"
+                style={{
+                  width: "100px",
+                  height: "100px",
+                  marginBottom: "10px",
+                }}
+              />
+            </div>
+          )}
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="form-input"
+          />
         </div>
 
         <button type="submit" className="submit-button">

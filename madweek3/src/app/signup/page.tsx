@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { SERVER_URL, useUser } from "../UserContext";
 
 export default function SignUpPage() {
   const router = useRouter();
-  const { setLoggedInUserId, setLoggedInUserName } = useUser();
+  const { loggedInUserId, setLoggedInUserId, setLoggedInUserName } = useUser();
 
   const [formData, setFormData] = useState({
     username: "",
@@ -14,6 +14,14 @@ export default function SignUpPage() {
     name: "",
     user_id: "",
   });
+  const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    // Redirect to home if the user is already logged in
+    if (loggedInUserId) {
+      router.push("/");
+    }
+  }, [loggedInUserId, router]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -22,51 +30,42 @@ export default function SignUpPage() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setErrorMessage("");
     let user_id, user_name;
 
     try {
       const response = await fetch(`${SERVER_URL}/add_user`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json", // Sending JSON data
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           username: formData.username,
           password: formData.password,
           name: formData.name,
-          user_id: formData.user_id,
         }),
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.error("Error:", errorData);
-        alert("회원가입 실패");
+        setErrorMessage(errorData.message || "회원가입 실패");
         return;
       }
 
+      const result = await response.json();
+      console.log("result", result);
+      user_id = result.user_id;
+      user_name = result.name;
+
       alert("회원가입 성공!");
 
-      try {
-        const response = await fetch(`${SERVER_URL}/profile_detail`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            user_id: formData.user_id,
-          }),
-        });
-        const result = await response.json();
-        user_id = result.user_id;
-        user_name = result.name;
+      // Log the user in after signup
+      console.log(loggedInUserId);
 
-        router.push("/");
-      } catch (error) {
-        console.error("Error:", error);
-        alert("오류가 발생했습니다.");
-      }
+      router.push("/");
     } catch (error) {
       console.error("Error:", error);
-      alert("오류가 발생했습니다.");
+      setErrorMessage("회원가입 중 오류가 발생했습니다.");
     }
 
     setLoggedInUserId(user_id);
@@ -77,6 +76,9 @@ export default function SignUpPage() {
     <div className="signup-container">
       <div className="signup-form">
         <h2 className="signup-title">회원가입</h2>
+
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
+
         <form onSubmit={handleSubmit} className="signup-fields">
           {/* Username */}
           <div className="form-group">

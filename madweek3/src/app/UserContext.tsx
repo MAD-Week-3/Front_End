@@ -35,7 +35,12 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <UserContext.Provider
-      value={{ loggedInUserId, loggedInUserName, setLoggedInUserId: updateUserId, setLoggedInUserName: updateUserName }}
+      value={{
+        loggedInUserId,
+        loggedInUserName,
+        setLoggedInUserId: updateUserId,
+        setLoggedInUserName: updateUserName,
+      }}
     >
       {children}
     </UserContext.Provider>
@@ -52,4 +57,4 @@ export const useUser = () => {
 };
 
 export const SERVER_URL =
-  "https://48b1-2001-2d8-6480-18dd-587f-9775-bda5-267.ngrok-free.app";
+  "https://987d-2001-2d8-645e-1844-2c33-8ef2-b2ee-697c.ngrok-free.app";

@@ -11,8 +11,19 @@
 .profile-card .avatar {
   width: 150px;
   height: 150px;
-  background-color: #e0e0e0;
+  background-color: #e0e0e0; /* Placeholder color */
   border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* Ensures image doesn't overflow container */
+}
+
+.profile-card .avatar img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  border-radius: inherit;
 }
 
 .profile-card .details {
@@ -56,6 +67,7 @@
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
 }
+
 .heart-button:hover {
   transform: scale(1.1); /* Slightly enlarges on hover */
 }

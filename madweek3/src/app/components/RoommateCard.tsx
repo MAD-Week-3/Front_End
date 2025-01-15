@@ -5,6 +5,7 @@ interface RoommateCardProps {
   id: number;
   name: string;
   age: number;
+  profileImage: string;
 }
 
 export default function RoommateCard({ id, name, age }: RoommateCardProps) {

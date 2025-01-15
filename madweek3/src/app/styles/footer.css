@@ -1,4 +1,4 @@
-/* Footer */
+/* Footer Styles */
 footer {
   margin-top: 40px;
   padding: 20px;
@@ -23,8 +23,10 @@ footer .links a {
   color: #ffffff;
   font-size: 14px;
   text-decoration: none;
+  transition: color 0.3s ease, text-decoration 0.3s ease;
 }
 
 footer .links a:hover {
   text-decoration: underline;
+  color: #d1d5db;
 }

@@ -1,71 +1,60 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ReviewCard from "./components/ReviewCard";
+import { SERVER_URL } from "./UserContext";
 
 export default function Home() {
-  const [showModal, setShowModal] = useState(false); // 팝업 상태 관리
+  const [showModal, setShowModal] = useState(false); // Manage modal visibility
+  const [reviews, setReviews] = useState<
+    { content: string; created_at: string; rating: number }[]
+  >([]);
+  const [loading, setLoading] = useState(true); // Manage loading state
+  const [errorMessage, setErrorMessage] = useState<string | null>(null); // Manage error state
   const router = useRouter();
 
-  const reviews = [
-    {
-      title: "Great Roommate",
-      body: "Very clean and respectful.",
-      reviewer: "John",
-      date: "2023-01-01",
-      stars: 5,
-    },
-    {
-      title: "Great Roommate",
-      body: "Very clean and respectful.",
-      reviewer: "John",
-      date: "2023-01-01",
-      stars: 5,
-    },
-    {
-      title: "Great Roommate",
-      body: "Very clean and respectful.",
-      reviewer: "John",
-      date: "2023-01-01",
-      stars: 5,
-    },
-    {
-      title: "Friendly",
-      body: "Always helpful and fun to live with.",
-      reviewer: "Jane",
-      date: "2023-01-02",
-      stars: 4,
-    },
-    {
-      title: "Friendly",
-      body: "Always helpful and fun to live with.",
-      reviewer: "Jane",
-      date: "2023-01-02",
-      stars: 4,
-    },
-    {
-      title: "Friendly",
-      body: "Always helpful and fun to live with.",
-      reviewer: "Jane",
-      date: "2023-01-02",
-      stars: 4,
-    },
-    {
-      title: "Friendly",
-      body: "Always helpful and fun to live with.",
-      reviewer: "Jane",
-      date: "2023-01-02",
-      stars: 4,
-    },
-  ];
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await fetch(`${SERVER_URL}/reviews`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "ngrok-skip-browser-warning": "69420",
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch reviews.");
+        }
+
+        const data = await response.json();
+        console.log("data", data);
+
+        if (data.success && Array.isArray(data.reviews)) {
+          // Map the reviews array to extract content, created_at, and rating
+          const formattedReviews = data.reviews.map((review: any) => ({
+            content: review.content,
+            created_at: review.created_at,
+            rating: review.rating,
+          }));
+          setReviews(formattedReviews); // Set the state with the formatted data
+        }
+        setErrorMessage(null);
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+        setErrorMessage("Failed to load reviews.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchReviews();
+  }, []);
 
   const handleStartClick = () => {
     router.push("/roommates");
-  };
-
-  const handleSignUpClick = () => {
-    router.push("/signup");
   };
 
   const handleOpenModal = () => {
@@ -103,7 +92,6 @@ export default function Home() {
         className="background-section"
         style={{ backgroundImage: "url('/background.png')" }}
       >
-        <div className="background-text">배경 이미지가 있는 섹션입니다.</div>
       </div>
 
       {/* Review Section */}

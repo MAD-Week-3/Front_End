@@ -1,0 +1,129 @@
+<<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>3D Map with Server Integration</title>
+    <script
+      type="text/javascript"
+      src="http://map.vworld.kr/js/webglMapInit.js.do?version=2.0&apiKey=D817300D-E3EE-3777-AEFE-F26945D8AD88&domain=localhost:8080"
+    ></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        font-family: Arial, sans-serif;
+      }
+      #vmap {
+        width: 100%;
+        height: 90vh;
+      }
+      #search-container {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 1000;
+        background: white;
+        padding: 15px;
+        box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.3);
+        border-radius: 8px;
+      }
+      #search-container input {
+        width: 250px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+      #search-container button {
+        padding: 10px 15px;
+        margin-left: 5px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      #search-container button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="vmap"></div>
+
+    <div id="search-container">
+      <input type="text" id="search-input" placeholder="주소를 입력하세요" />
+      <button onclick="searchAddress()">검색</button>
+    </div>
+
+    <script type="text/javascript">
+      let map3d; // 지도 객체 전역 변수
+
+      // 지도 초기화 함수
+      function vwmap() {
+        const mapOptions = new vw.MapOptions(
+          vw.BasemapType.GRAPHIC,
+          "",
+          vw.DensityType.BASIC,
+          vw.DensityType.BASIC,
+          false,
+          new vw.CameraPosition(
+            new vw.CoordZ(127.425, 38.196, 13487000),
+            new vw.Direction(-90, 0, 0)
+          ),
+          new vw.CameraPosition(
+            new vw.CoordZ(127.425, 38.196, 1548700),
+            new vw.Direction(0, -90, 0)
+          )
+        );
+
+        map3d = new vw.Map("vmap", mapOptions);
+      }
+
+      // 주소 검색 함수
+      function searchAddress() {
+        const query = document.getElementById("search-input").value;
+
+        if (!query) {
+          alert("주소를 입력하세요.");
+          return;
+        }
+
+        // 서버로 주소 전송 및 위도 경도 받아오기
+        $.ajax({
+          url: "https://9418-2001-2d8-648b-271a-6599-6a1-ae1d-c8db.ngrok-free.app/get-coordinates", // 서버의 API 엔드포인트
+          type: "POST",
+          contentType: "application/json",
+          data: JSON.stringify({ address: query }),
+          success: function (response) {
+            if (response.latitude && response.longitude) {
+              const lat = parseFloat(response.latitude);
+              const lon = parseFloat(response.longitude);
+
+              // 검색된 좌표로 지도 이동
+              map3d.moveTo(
+                new vw.CameraPosition(
+                  new vw.CoordZ(lon, lat, 80),
+                  new vw.Direction(0, -45, 0)
+                )
+              );
+            } else {
+              alert("검색 결과가 없습니다.");
+            }
+          },
+          error: function (error) {
+            console.error("API 호출 중 오류 발생:", error);
+            alert("검색에 실패했습니다. 잠시 후 다시 시도해주세요.");
+          },
+        });
+      }
+
+      // 페이지 로드 시 지도 초기화
+      vwmap();
+    </script>
+  </body>
+</html>

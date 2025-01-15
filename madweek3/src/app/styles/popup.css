@@ -1,28 +1,76 @@
+/* Popup Container */
 .popup {
-  z-index: 1000;
+  position: fixed;
+  inset: 0; /* Top, Right, Bottom, Left to cover the entire viewport */
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50; /* Ensure it is above other elements */
 }
 
+/* Popup Dialog */
 .popup-dialog {
-  max-width: 400px;
-  background-color: white;
-  border-radius: 8px;
-  padding: 16px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  animation: scale-in 0.2s ease-out;
+  background-color: #ffffff; /* White background for the dialog */
+  padding: 24px; /* Spacing inside the popup */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  width: 24rem; /* Fixed width (matches w-96 in Tailwind) */
+  max-width: 90%; /* Ensure it doesn't exceed viewport width */
 }
 
-.popup-dialog button {
+/* Title */
+.popup-dialog h3 {
+  font-size: 1.25rem; /* Matches text-lg in Tailwind */
+  font-weight: bold; /* Matches font-bold */
+  margin-bottom: 16px; /* Space below the title */
+  color: #333333; /* Dark gray text */
+}
+
+/* Textarea */
+.popup-dialog textarea {
+  width: 100%; /* Full width of the container */
+  height: 6rem; /* Fixed height */
+  border: 1px solid #d1d5db; /* Light gray border (matches border-gray-300) */
+  padding: 8px; /* Padding inside the textarea */
+  border-radius: 4px; /* Rounded corners */
+  resize: none; /* Disable resizing */
+  margin-bottom: 16px; /* Space below the textarea */
+  font-size: 1rem; /* Default font size */
+  color: #333333; /* Text color */
+}
+
+/* Buttons Container */
+.popup-dialog .flex {
+  display: flex;
+  justify-content: flex-end; /* Align buttons to the right */
+  gap: 12px; /* Space between buttons */
+}
+
+/* Cancel Button */
+.popup-dialog .cancelbutton {
+  background-color: #d1d5db; /* Light gray background */
+  color: #000000; /* Black text */
+  padding: 8px 16px; /* Matches px-4 py-2 */
+  border-radius: 4px; /* Rounded corners */
   cursor: pointer;
+  transition: background-color 0.2s ease; /* Smooth hover effect */
 }
 
-/* Animation for Popup */
-@keyframes scale-in {
-  from {
-    transform: scale(0.9);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
+.popup-dialog .cancelbutton:hover {
+  background-color: #c4c4c4; /* Slightly darker gray on hover */
+}
+
+/* Submit Button */
+.popup-dialog .submitbutton {
+  background-color: #3b82f6; /* Blue background (matches bg-blue-500) */
+  color: #ffffff; /* White text */
+  padding: 8px 16px; /* Matches px-4 py-2 */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer;
+  transition: background-color 0.2s ease; /* Smooth hover effect */
+}
+
+.popup-dialog .submitbutton:hover {
+  background-color: #2563eb; /* Darker blue on hover */
 }
