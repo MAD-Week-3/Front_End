@@ -86,7 +86,7 @@ export default function Home() {
           </button>
         </div>
       </main>
-
+    
       {/* Background Section */}
       <div
         className="background-section"

@@ -8,11 +8,30 @@ interface RoommateCardProps {
   profileImage: string;
 }
 
-export default function RoommateCard({ id, name, age }: RoommateCardProps) {
+export default function RoommateCard({
+  id,
+  name,
+  age,
+  profileImage,
+}: RoommateCardProps) {
+  const imageUrl = profileImage
+    ? `data:image/jpeg;base64,${profileImage}` // Combine server URL with the relative path
+    : ""; // Default to empty if no image provided
+  console.log(imageUrl);
   return (
     <div className="roommate-card">
-      <div className="roommate-avatar">
-        <img src="/placeholder-avatar.png" alt={`${name} avatar`} />
+      <div className="avatar">
+        {imageUrl ? (
+          <img
+            src={imageUrl}
+            alt={`${name}'s profile`}
+            style={{ width: "100px", height: "100px", objectFit: "cover" }}
+          />
+        ) : (
+          <div style={{ width: "100px", height: "100px", background: "#ccc" }}>
+            No Image
+          </div>
+        )}
       </div>
       <div className="roommate-details">
         <Link href={`/roommates/${id}`}>

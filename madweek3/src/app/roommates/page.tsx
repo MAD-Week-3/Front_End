@@ -49,7 +49,7 @@ export default function Roommates() {
 
       const ageData = data1.recommendations || []; // Assume data.users contains the age information
       console.log("ageData", ageData);
-      
+
       // Fetch user_id and name
       const response2 = await fetch(`${SERVER_URL}/user_name`, {
         method: "GET",
@@ -87,6 +87,7 @@ export default function Roommates() {
             user_id: ageItem.user_id,
             age: ageItem.age,
             name: nameItem ? nameItem.name : "Unknown",
+            photo_url: ageItem.photo_base64,
           };
         });
 
@@ -166,6 +167,7 @@ export default function Roommates() {
               user_id: ageItem.user_id,
               age: ageItem.age,
               name: nameItem ? nameItem.name : "Unknown",
+              photo_url: ageItem.photo_base64,
             };
           });
 
@@ -196,9 +198,6 @@ export default function Roommates() {
         <div className="search-bar">
           <input type="text" placeholder="Search" className="search-input" />
           <div className="filter-buttons">
-            <button className="btn-filter">최근 가입 순</button>
-            <button className="btn-filter">높은 평점 순</button>
-            <button className="btn-filter">낮은 평점 순</button>
             <button
               className="btn-filter"
               onClick={fetchGoodRoommates} // Pass function reference, not invocation

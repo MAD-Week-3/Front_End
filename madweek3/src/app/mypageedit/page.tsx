@@ -85,7 +85,7 @@ export default function MyPage() {
         }));
         setImagePreview(base64); // Update image preview
       };
-
+      
       reader.onerror = () => {
         console.error("Error reading file");
       };
@@ -105,6 +105,8 @@ export default function MyPage() {
         },
         body: JSON.stringify(profile),
       });
+
+      console.log(profile);
 
       if (!response.ok) {
         throw new Error("Failed to update user profile.");

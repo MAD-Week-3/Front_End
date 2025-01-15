@@ -85,7 +85,7 @@ export default function RoommateProfilePage({
           age={roommate.age}
           introduction={roommate.introduction || "No preferences available"}
           profileId={roommate.user_id}
-          profileImage={roommate.photo_url || ""} // Pass Base64 image
+          profileImage={roommate.photo_base64 || ""} // Pass Base64 image
         />
         <DetailCard
           introduction={roommate.introduction || "No bio available."}

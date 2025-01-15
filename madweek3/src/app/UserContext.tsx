@@ -57,4 +57,4 @@ export const useUser = () => {
 };
 
 export const SERVER_URL =
-  "https://987d-2001-2d8-645e-1844-2c33-8ef2-b2ee-697c.ngrok-free.app";
+  "https://8d68-2001-2d8-6485-2cef-2588-95e0-e29a-d740.ngrok-free.app";
