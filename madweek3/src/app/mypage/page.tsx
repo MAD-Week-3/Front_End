@@ -46,12 +46,15 @@ export default function MyPage() {
         }
 
         const data = await response.json();
+
+        console.log("data", data);
         if (data && data.profile) {
           setRoommate(data.profile);
           setErrorMessage(null);
         } else {
           setErrorMessage("Failed to load profile data.");
         }
+        
         if (data.success && Array.isArray(data.reviews)) {
           // Map the reviews array to extract content, created_at, and rating
           const formattedReviews = data.reviews.map((review: any) => ({
@@ -59,6 +62,8 @@ export default function MyPage() {
             created_at: review.created_at,
             rating: review.rating,
           }));
+          console.log("formmatedreviews", formattedReviews);
+
           setReviews(formattedReviews); // Set the state with the formatted data
         }
       } catch (err) {
@@ -93,6 +98,8 @@ export default function MyPage() {
       </div>
     );
   }
+
+  console.log("reviews", reviews);
 
   return (
     <div className="roommate-profile-container">

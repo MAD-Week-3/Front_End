@@ -12,7 +12,7 @@ import { useUser, SERVER_URL } from "../../UserContext";
 export default function RoommateProfilePage({
   params,
 }: {
-  params: { id: string };
+  params: { id: Number };
 }) {
   const { id } = params; // ID from route
   const [roommate, setRoommate] = useState<any>(null);
